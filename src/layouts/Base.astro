@@ -1,0 +1,44 @@
+---
+import '../styles/tokens.css';
+import '../styles/global.css';
+
+interface Props {
+  lang: 'fr' | 'en';
+  title: string;
+  description: string;
+}
+
+const { lang, title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    {/* Anti-FOUC : applique le thème mémorisé avant le premier paint. */}
+    <script is:inline>
+      try {
+        const v = localStorage.getItem('color-scheme');
+        if (v === 'dark' || v === 'light') {
+          document.querySelector('meta[name="color-scheme"]').content = v;
+        }
+      } catch (e) {
+        /* localStorage indisponible : on suit le système. */
+      }
+    </script>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Aller au contenu</a>
+    <slot name="nav" />
+    <main id="main">
+      <slot />
+    </main>
+    <slot name="footer" />
+  </body>
+</html>

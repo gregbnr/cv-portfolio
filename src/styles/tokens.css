@@ -1,0 +1,63 @@
+/* Design tokens — direction « Violet néon » (spec §5)
+   Thème piloté par <meta name="color-scheme">, mappé ici vers color-scheme.
+   La base reste `light dark` : si le JS ne tourne pas, on suit le système. */
+
+:root {
+  color-scheme: light dark;
+}
+:root:has(> head > meta[name='color-scheme'][content='dark']) {
+  color-scheme: dark;
+}
+:root:has(> head > meta[name='color-scheme'][content='light']) {
+  color-scheme: light;
+}
+
+:root {
+  /* Couleurs — light-dark(valeur claire, valeur sombre) */
+  --bg: light-dark(#fbf7ff, #0b0712);
+  --surface: light-dark(#ffffff, #120a1c);
+  --surface-2: light-dark(#f3ecfb, #1a0f2b);
+  --ink: light-dark(#1a1024, #fbf5ff);
+  --muted: light-dark(#5b4a6b, #c9a9db);
+
+  --violet: light-dark(#7c3aed, #a855f7);
+  --pink: light-dark(#db2777, #ec4899);
+  --accent-text: light-dark(#6d28d9, #e9a7ff);
+
+  --grad-from: light-dark(#7c3aed, #c084fc);
+  --grad-to: light-dark(#db2777, #f472b6);
+
+  --border: light-dark(rgba(124, 58, 237, 0.22), rgba(168, 85, 247, 0.3));
+  --border-strong: light-dark(rgba(124, 58, 237, 0.4), rgba(168, 85, 247, 0.5));
+  --glow: light-dark(rgba(124, 58, 237, 0.18), rgba(168, 85, 247, 0.35));
+
+  /* Dégradés réutilisables */
+  --grad-accent: linear-gradient(135deg, var(--violet), var(--pink));
+  --grad-text: linear-gradient(120deg, var(--grad-from), var(--grad-to));
+
+  /* Typographie */
+  --font-sans:
+    system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display: var(--font-sans);
+  --font-mono: ui-monospace, 'SFMono-Regular', 'Menlo', monospace;
+
+  /* Échelle d'espacement */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  /* Rayons */
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-full: 999px;
+
+  /* Largeur de contenu */
+  --content-max: 1080px;
+}
