@@ -6,10 +6,16 @@ interface Props {
 const { lang, label } = Astro.props;
 const href = lang === 'fr' ? '/en/' : '/';
 const other = lang === 'fr' ? 'en' : 'fr';
+const code = lang === 'fr' ? 'EN' : 'FR';
 ---
 
-<a class="lang-toggle" href={href} hreflang={other} aria-label={label}>
-  {lang === 'fr' ? 'EN' : 'FR'}
+<a
+  class="lang-toggle"
+  href={href}
+  hreflang={other}
+  aria-label={`${code} · ${label}`}
+>
+  {code}
 </a>
 
 <style>
