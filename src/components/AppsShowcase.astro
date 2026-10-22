@@ -1,0 +1,107 @@
+---
+import type { SiteContent } from '../data/types';
+import Section from './Section.astro';
+import PhoneMockup from './PhoneMockup.astro';
+
+interface Props {
+  content: SiteContent;
+}
+const { content } = Astro.props;
+const apps = content.apps;
+---
+
+<Section id="apps" heading={apps.heading} subtitle={apps.subtitle} star>
+  <ul class="apps-grid">
+    {
+      apps.items.map((app) => (
+        <li class="app" data-reveal>
+          <PhoneMockup
+            screenTitle={app.screenTitle}
+            subtitle={app.tech}
+            accentFrom={app.accentFrom}
+            accentTo={app.accentTo}
+            screenshot={app.screenshot}
+            alt={app.name}
+          />
+          <div class="app-info">
+            <p class="app-name">{app.name}</p>
+            <p class="app-tech">{app.tech}</p>
+            <div class="badges">
+              {app.stores.map((s) => (
+                <a
+                  class="badge"
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {s.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
+
+<style>
+  .apps-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-8);
+  }
+  .app {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .app-info {
+    text-align: center;
+  }
+  .app-name {
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .app-tech {
+    color: var(--accent-text);
+    font-size: 0.8rem;
+    margin-top: 2px;
+  }
+  .badges {
+    display: flex;
+    gap: var(--space-2);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: var(--space-3);
+  }
+  .badge {
+    font-size: 0.78rem;
+    color: var(--ink);
+    text-decoration: none;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-full);
+    padding: 5px 12px;
+    transition:
+      border-color 0.15s ease,
+      background 0.15s ease;
+  }
+  .badge:hover {
+    background: color-mix(in srgb, var(--violet) 14%, transparent);
+  }
+
+  @media (max-width: 860px) {
+    .apps-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-12) var(--space-6);
+    }
+  }
+  @media (max-width: 440px) {
+    .apps-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
