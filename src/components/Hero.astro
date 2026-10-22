@@ -1,0 +1,169 @@
+---
+import type { SiteContent } from '../data/types';
+import PhoneMockup from './PhoneMockup.astro';
+
+interface Props {
+  content: SiteContent;
+}
+const { content } = Astro.props;
+const h = content.hero;
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-inner container">
+    <div class="hero-text">
+      <p class="label">{h.label}</p>
+      <h1 id="hero-title">
+        {h.name.split(' ')[0]}
+        <span class="grad">{h.name.split(' ').slice(1).join(' ')}</span>
+      </h1>
+      <p class="tagline">{h.tagline}</p>
+      <p class="sub">{h.sub}</p>
+      <div class="cta">
+        <a class="btn prim" href="#contact">{h.ctaContact}</a>
+        <a class="btn ghost" href={content.cvUrl} download>{h.ctaCv}</a>
+      </div>
+      <ul class="meta">
+        {h.meta.map((m) => <li>{m.value}</li>)}
+      </ul>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <PhoneMockup
+        screenTitle={content.apps.items[0]?.screenTitle ?? 'App'}
+        subtitle="Flutter"
+        accentFrom="#A855F7"
+        accentTo="#EC4899"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(3rem, 8vw, 6rem);
+    background-image:
+      radial-gradient(
+        80% 70% at 10% -10%,
+        var(--glow),
+        transparent 55%
+      ),
+      radial-gradient(
+        65% 60% at 110% 120%,
+        color-mix(in srgb, var(--pink) 30%, transparent),
+        transparent 55%
+      );
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 36px 36px;
+    mask-image: radial-gradient(70% 60% at 30% 10%, #000, transparent 75%);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .hero-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+  .label {
+    font-size: 0.8rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--accent-text);
+  }
+  h1 {
+    font-size: clamp(2.5rem, 7vw, 4.25rem);
+    margin-top: var(--space-3);
+  }
+  .grad {
+    background: var(--grad-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .tagline {
+    font-size: clamp(1.05rem, 2.5vw, 1.4rem);
+    margin-top: var(--space-4);
+    max-width: 32ch;
+    font-weight: 500;
+  }
+  .sub {
+    color: var(--muted);
+    margin-top: var(--space-3);
+    max-width: 46ch;
+  }
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+  .btn {
+    display: inline-grid;
+    place-items: center;
+    padding: 12px 22px;
+    border-radius: var(--radius);
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  .btn.prim {
+    color: #fff;
+    background: var(--grad-accent);
+    box-shadow: 0 12px 34px var(--glow);
+  }
+  .btn.ghost {
+    color: var(--ink);
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+    border: 1px solid var(--border-strong);
+  }
+  .meta {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .meta li {
+    position: relative;
+    padding-left: 14px;
+  }
+  .meta li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--violet);
+  }
+  .hero-visual {
+    justify-self: center;
+  }
+
+  @media (max-width: 820px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+    .hero-visual {
+      max-width: 180px;
+      order: -1;
+    }
+  }
+</style>

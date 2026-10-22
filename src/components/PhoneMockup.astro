@@ -1,0 +1,131 @@
+---
+interface Props {
+  screenTitle?: string;
+  subtitle?: string;
+  accentFrom?: string;
+  accentTo?: string;
+  screenshot?: string;
+  alt?: string;
+}
+const {
+  screenTitle,
+  subtitle,
+  accentFrom = '#A855F7',
+  accentTo = '#EC4899',
+  screenshot,
+  alt,
+} = Astro.props;
+---
+
+<div class="phone">
+  <span class="notch" aria-hidden="true"></span>
+  <div class="screen">
+    {
+      screenshot ? (
+        <img src={screenshot} alt={alt ?? ''} loading="lazy" decoding="async" />
+      ) : (
+        <>
+          <div
+            class="appbar"
+            style={`background:linear-gradient(135deg, ${accentFrom}, ${accentTo})`}
+          >
+            <span class="t">{screenTitle}</span>
+            {subtitle && <span class="s">{subtitle}</span>}
+          </div>
+          <div class="body" aria-hidden="true">
+            <span class="card" />
+            <span class="l w90" />
+            <span class="l w70" />
+            <span class="card" />
+            <span class="l w80" />
+            <span class="l w60" />
+          </div>
+        </>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .phone {
+    width: 100%;
+    max-width: 230px;
+    aspect-ratio: 9 / 19;
+    margin-inline: auto;
+    padding: 9px;
+    border-radius: 34px;
+    background: light-dark(#e7def4, #120a1c);
+    border: 2px solid var(--border-strong);
+    box-shadow: 0 24px 70px var(--glow);
+    position: relative;
+  }
+  .notch {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 54px;
+    height: 5px;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--ink) 25%, transparent);
+    z-index: 2;
+  }
+  .screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 26px;
+    overflow: hidden;
+    background: light-dark(#f4eefc, #0b0712);
+    display: flex;
+    flex-direction: column;
+  }
+  .screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .appbar {
+    padding: 26px 16px 14px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .appbar .t {
+    font-weight: 800;
+    font-size: 0.95rem;
+  }
+  .appbar .s {
+    font-size: 0.68rem;
+    opacity: 0.88;
+  }
+  .body {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .body .l {
+    height: 9px;
+    border-radius: 5px;
+    background: color-mix(in srgb, var(--violet) 18%, transparent);
+  }
+  .body .card {
+    height: 44px;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--violet) 12%, transparent);
+    border: 1px solid var(--border);
+  }
+  .w90 {
+    width: 90%;
+  }
+  .w80 {
+    width: 80%;
+  }
+  .w70 {
+    width: 70%;
+  }
+  .w60 {
+    width: 60%;
+  }
+</style>
