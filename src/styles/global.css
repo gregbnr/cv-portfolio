@@ -18,6 +18,11 @@ html {
   }
 }
 
+/* Décale les ancres pour qu'elles ne passent pas sous la nav sticky. */
+:is(.section, .hero, [id]) {
+  scroll-margin-top: 76px;
+}
+
 body {
   min-height: 100svh;
   background-color: var(--bg);

@@ -8,16 +8,16 @@ interface Props {
 }
 const { content } = Astro.props;
 const h = content.hero;
+
+const [firstName, ...restName] = h.name.split(' ');
+const lastName = restName.join(' ');
 ---
 
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-inner container">
     <div class="hero-text">
       <p class="label">{h.label}</p>
-      <h1 id="hero-title">
-        {h.name.split(' ')[0]}
-        <span class="grad">{h.name.split(' ').slice(1).join(' ')}</span>
-      </h1>
+      <h1 id="hero-title">{firstName}{' '}<span class="grad">{lastName}</span></h1>
       <p class="tagline">{h.tagline}</p>
       <p class="sub">{h.sub}</p>
       <div class="cta">
