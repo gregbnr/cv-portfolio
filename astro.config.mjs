@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, passthroughImageService } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
@@ -8,6 +8,9 @@ export default defineConfig({
   site: 'https://gregbnr.github.io',
   base: '/cv-portfolio/',
   output: 'static',
+  // On n'optimise aucune image au build (l'OG est un fichier statique), donc on
+  // évite sharp (module natif) — plus léger et pas de chargement natif en CI.
+  image: { service: passthroughImageService() },
   i18n: {
     locales: ['fr', 'en'],
     defaultLocale: 'fr',

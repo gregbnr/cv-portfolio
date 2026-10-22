@@ -27,7 +27,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build
-        run: npm run build
+        env:
+          ASTRO_TELEMETRY_DISABLED: '1'
+        run: npm run build || (echo "Build retry after transient failure" && npm run build)
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
