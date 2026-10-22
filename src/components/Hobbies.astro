@@ -1,0 +1,58 @@
+---
+import type { SiteContent } from '../data/types';
+import Section from './Section.astro';
+
+interface Props {
+  content: SiteContent;
+}
+const { content } = Astro.props;
+const h = content.hobbies;
+
+const icons: Record<string, string> = {
+  Football: '⚽',
+  Rugby: '🏉',
+  'Cuisine (fin gourmet)': '🍷',
+  'Cooking (fine food lover)': '🍷',
+  'Chant polyphonique': '🎶',
+  'Polyphonic singing': '🎶',
+};
+---
+
+<Section id="hobbies" heading={h.heading}>
+  <ul class="hobbies" data-reveal>
+    {
+      h.items.map((item) => (
+        <li class="hobby">
+          <span class="ico" aria-hidden="true">
+            {icons[item] ?? '✦'}
+          </span>
+          {item}
+        </li>
+      ))
+    }
+  </ul>
+</Section>
+
+<style>
+  .hobbies {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+  .hobby {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6ch;
+    padding: 10px 18px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--surface) 65%, transparent);
+    font-weight: 500;
+  }
+  .ico {
+    font-size: 1.2rem;
+  }
+</style>
