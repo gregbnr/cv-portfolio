@@ -1,0 +1,52 @@
+/* Effets interactifs — spotlight au pointeur (enrichissement progressif).
+   Le contenu reste pleinement lisible sans ces effets. */
+
+/* Propriétés enregistrées pour interpoler la position/intensité en douceur. */
+@property --mx {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+@property --my {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+@property --spot {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Seuls les dispositifs à pointeur fin reçoivent le spotlight (pas le tactile). */
+  @media (pointer: fine) {
+    [data-spotlight] {
+      position: relative;
+      transition:
+        --mx 0.12s ease-out,
+        --my 0.12s ease-out,
+        --spot 0.3s ease;
+    }
+    [data-spotlight]::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: var(--spot, 0);
+      background: radial-gradient(
+        var(--spot-size, 260px) circle at var(--mx) var(--my),
+        color-mix(in srgb, var(--violet) 40%, transparent),
+        transparent 60%
+      );
+      mix-blend-mode: plus-lighter;
+      z-index: 1;
+    }
+    /* Le contenu passe au-dessus du halo. */
+    [data-spotlight] > * {
+      position: relative;
+      z-index: 2;
+    }
+  }
+}

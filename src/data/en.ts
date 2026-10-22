@@ -264,6 +264,7 @@ export const enContent: SiteContent = {
     subjectLabel: 'Subject',
     messageLabel: 'Message',
     sendLabel: 'Send',
+    directLabel: 'Or directly',
     copyLabel: 'Copy my email',
     copiedLabel: 'Email copied ✓',
     linkedinLabel: 'LinkedIn',

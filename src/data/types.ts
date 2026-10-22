@@ -132,6 +132,7 @@ export interface SiteContent {
     subjectLabel: string;
     messageLabel: string;
     sendLabel: string;
+    directLabel: string;
     copyLabel: string;
     copiedLabel: string;
     linkedinLabel: string;

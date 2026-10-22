@@ -1,15 +1,14 @@
 ---
 import type { SiteContent } from '../data/types';
 import Section from './Section.astro';
+import { withBase } from '../lib/url';
 
 interface Props {
   content: SiteContent;
 }
 const { content } = Astro.props;
 const a = content.about;
-/** Photo optionnelle : déposer le fichier dans /public/img/photo.jpg puis
- *  renseigner son chemin ici. Tant qu'il est absent, on affiche un placeholder. */
-const photo: string | undefined = undefined;
+const photo: string | undefined = withBase('img/profile-image.webp');
 ---
 
 <Section id="about" heading={a.heading}>
@@ -17,7 +16,15 @@ const photo: string | undefined = undefined;
     <div class="photo">
       {
         photo ? (
-          <img src={photo} alt={a.photoAlt} width="220" height="260" />
+          <img
+            class="photo-img"
+            src={photo}
+            alt={a.photoAlt}
+            width="280"
+            height="280"
+            loading="lazy"
+            decoding="async"
+          />
         ) : (
           <div class="photo-ph" role="img" aria-label={a.photoAlt}>
             GB
@@ -34,9 +41,18 @@ const photo: string | undefined = undefined;
 <style>
   .about {
     display: grid;
-    grid-template-columns: 220px 1fr;
+    grid-template-columns: 280px 1fr;
     gap: var(--space-8);
     align-items: center;
+  }
+  .photo-img {
+    width: 100%;
+    max-width: 280px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-strong);
+    box-shadow: 0 20px 55px var(--glow);
   }
   .photo-ph {
     width: 220px;
@@ -60,6 +76,9 @@ const photo: string | undefined = undefined;
     .about {
       grid-template-columns: 1fr;
       justify-items: start;
+    }
+    .photo-img {
+      max-width: 180px;
     }
     .photo-ph {
       width: 140px;

@@ -266,6 +266,7 @@ export const frContent: SiteContent = {
     subjectLabel: 'Objet',
     messageLabel: 'Message',
     sendLabel: 'Envoyer',
+    directLabel: 'Ou directement',
     copyLabel: 'Copier mon email',
     copiedLabel: 'Email copié ✓',
     linkedinLabel: 'LinkedIn',

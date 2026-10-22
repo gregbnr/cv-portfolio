@@ -14,7 +14,7 @@ const apps = content.apps;
   <ul class="apps-grid">
     {
       apps.items.map((app) => (
-        <li class="app" data-reveal>
+        <li class="app" data-reveal data-spotlight style="--spot-size: 220px;">
           <PhoneMockup
             screenTitle={app.screenTitle}
             subtitle={app.tech}

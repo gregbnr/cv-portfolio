@@ -10,7 +10,7 @@ const g = content.genui;
 ---
 
 <Section id="genui" heading={g.heading} star>
-  <div class="genui" data-reveal>
+  <div class="genui" data-reveal data-spotlight style="--spot-size: 440px;">
     <div class="glow" aria-hidden="true"></div>
     <div class="genui-content">
       <h3>{g.title}</h3>
@@ -85,6 +85,19 @@ const g = content.genui;
     color: #fff;
     background: var(--grad-accent);
     box-shadow: 0 10px 30px var(--glow);
+    transition:
+      filter 0.18s ease,
+      box-shadow 0.18s ease,
+      transform 0.18s ease;
+  }
+  .genui-link:hover {
+    filter: brightness(1.08);
+    box-shadow: 0 14px 38px var(--glow);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .genui-link:hover {
+      transform: translateY(-2px);
+    }
   }
   .badge-ai {
     position: relative;

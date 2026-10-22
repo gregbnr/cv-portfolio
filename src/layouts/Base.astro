@@ -2,6 +2,7 @@
 import '../styles/tokens.css';
 import '../styles/global.css';
 import '../styles/motion.css';
+import '../styles/fx.css';
 import { withBase } from '../lib/url';
 
 interface Props {
@@ -68,5 +69,8 @@ const enUrl = new URL(siteBase + 'en/', origin).href;
       <slot />
     </main>
     <slot name="footer" />
+    <script>
+      import '../scripts/pointer-fx.ts';
+    </script>
   </body>
 </html>
