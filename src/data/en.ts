@@ -18,6 +18,8 @@ export const enContent: SiteContent = {
     switchLang: 'Français',
     toggleTheme: 'Toggle theme',
     menu: 'Menu',
+    skipLink: 'Skip to content',
+    brandLabel: 'GB — Grégoire Bonnier, back to top',
   },
 
   hero: {
@@ -234,6 +236,7 @@ export const enContent: SiteContent = {
   articles: {
     heading: 'Articles & tech watch',
     subtitle: 'I regularly share about mobile and tech trends.',
+    readMore: 'Read the article',
     items: [
       {
         title: 'Android 16: 5 highlights from the new OS version',

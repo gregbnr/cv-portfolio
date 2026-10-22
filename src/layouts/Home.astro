@@ -21,7 +21,12 @@ interface Props {
 const { content, title, description } = Astro.props;
 ---
 
-<Base lang={content.lang} title={title} description={description}>
+<Base
+  lang={content.lang}
+  title={title}
+  description={description}
+  skipLabel={content.nav.skipLink}
+>
   <Nav slot="nav" content={content} />
   <span id="top"></span>
   <Hero content={content} />

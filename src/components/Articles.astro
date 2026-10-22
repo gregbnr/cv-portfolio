@@ -23,7 +23,7 @@ const a = content.articles;
             <span class="src">{article.source}</span>
             <span class="title">{article.title}</span>
             <span class="go" aria-hidden="true">
-              Lire l’article ↗
+              {a.readMore} ↗
             </span>
           </a>
         </li>
@@ -52,13 +52,20 @@ const a = content.articles;
     background: color-mix(in srgb, var(--surface) 65%, transparent);
     text-decoration: none;
     color: var(--ink);
-    transition:
-      border-color 0.15s ease,
-      transform 0.15s ease;
+    transition: border-color 0.15s ease;
   }
   .article:hover {
     border-color: var(--border-strong);
-    transform: translateY(-3px);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .article {
+      transition:
+        border-color 0.15s ease,
+        transform 0.15s ease;
+    }
+    .article:hover {
+      transform: translateY(-3px);
+    }
   }
   .src {
     font-size: 0.75rem;

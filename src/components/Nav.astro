@@ -22,7 +22,7 @@ const links = [
 
 <header class="nav">
   <div class="nav-inner container">
-    <a href="#top" class="brand" aria-label="GB — Grégoire Bonnier, haut de page">GB</a>
+    <a href="#top" class="brand" aria-label={n.brandLabel}>GB</a>
 
     <nav class="links links-desktop" aria-label={content.nav.menu}>
       {links.map((l) => <a href={l.href} data-spy={l.href}>{l.label}</a>)}
@@ -185,4 +185,12 @@ const links = [
 
 <script>
   import '../scripts/scrollspy.ts';
+
+  // Referme le menu mobile (<details>) après un clic sur un lien de section.
+  const menu = document.querySelector<HTMLDetailsElement>('.nav .menu');
+  menu?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => {
+      menu.open = false;
+    });
+  });
 </script>

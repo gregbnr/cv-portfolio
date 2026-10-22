@@ -66,6 +66,8 @@ export interface SiteContent {
     switchLang: string;
     toggleTheme: string;
     menu: string;
+    skipLink: string;
+    brandLabel: string;
   };
 
   hero: {
@@ -113,6 +115,7 @@ export interface SiteContent {
   articles: {
     heading: string;
     subtitle: string;
+    readMore: string;
     items: Article[];
   };
 

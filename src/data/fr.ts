@@ -17,6 +17,8 @@ export const frContent: SiteContent = {
     switchLang: 'English',
     toggleTheme: 'Changer de thème',
     menu: 'Menu',
+    skipLink: 'Aller au contenu',
+    brandLabel: 'GB — Grégoire Bonnier, haut de page',
   },
 
   hero: {
@@ -235,6 +237,7 @@ export const frContent: SiteContent = {
   articles: {
     heading: 'Articles & veille',
     subtitle: 'Je partage régulièrement sur le mobile et les tendances tech.',
+    readMore: 'Lire l’article',
     items: [
       {
         title: 'Android 16 : 5 nouveautés à retenir de la nouvelle version de l’OS',
