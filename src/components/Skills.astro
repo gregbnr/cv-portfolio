@@ -1,0 +1,67 @@
+---
+import type { SiteContent } from '../data/types';
+import Section from './Section.astro';
+
+interface Props {
+  content: SiteContent;
+}
+const { content } = Astro.props;
+const s = content.skills;
+---
+
+<Section id="skills" heading={s.heading}>
+  <div class="skills-grid">
+    {
+      s.groups.map((group) => (
+        <div class="skill-card" data-reveal>
+          <h3>{group.title}</h3>
+          <ul class="chips">
+            {group.items.map((item) => (
+              <li class="chip">{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</Section>
+
+<style>
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+  }
+  .skill-card {
+    background: color-mix(in srgb, var(--surface) 65%, transparent);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-6);
+  }
+  .skill-card h3 {
+    font-size: 1.05rem;
+    margin-bottom: var(--space-4);
+    color: var(--accent-text);
+  }
+  .chips {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .chip {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--violet) 12%, transparent);
+    border: 1px solid var(--border);
+    color: var(--ink);
+  }
+  @media (max-width: 640px) {
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

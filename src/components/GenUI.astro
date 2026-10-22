@@ -1,0 +1,108 @@
+---
+import type { SiteContent } from '../data/types';
+import Section from './Section.astro';
+
+interface Props {
+  content: SiteContent;
+}
+const { content } = Astro.props;
+const g = content.genui;
+---
+
+<Section id="genui" heading={g.heading} star>
+  <div class="genui" data-reveal>
+    <div class="glow" aria-hidden="true"></div>
+    <div class="genui-content">
+      <h3>{g.title}</h3>
+      <p>{g.description}</p>
+      <a
+        class="genui-link"
+        href={g.linkUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {g.linkLabel}
+        <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+    <div class="badge-ai" aria-hidden="true">A2UI</div>
+  </div>
+</Section>
+
+<style>
+  .genui {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-strong);
+    background:
+      radial-gradient(
+        90% 120% at 100% 0%,
+        color-mix(in srgb, var(--pink) 26%, transparent),
+        transparent 55%
+      ),
+      color-mix(in srgb, var(--surface) 70%, transparent);
+    padding: clamp(1.75rem, 5vw, 3rem);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-8);
+    align-items: center;
+  }
+  .glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      50% 60% at 0% 100%,
+      var(--glow),
+      transparent 60%
+    );
+    pointer-events: none;
+  }
+  .genui-content {
+    position: relative;
+    max-width: 60ch;
+  }
+  .genui-content h3 {
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    background: var(--grad-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .genui-content p {
+    margin-top: var(--space-4);
+    font-size: 1.05rem;
+  }
+  .genui-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4ch;
+    margin-top: var(--space-6);
+    padding: 11px 20px;
+    border-radius: var(--radius);
+    font-weight: 700;
+    text-decoration: none;
+    color: #fff;
+    background: var(--grad-accent);
+    box-shadow: 0 10px 30px var(--glow);
+  }
+  .badge-ai {
+    position: relative;
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    letter-spacing: 0.1em;
+    color: var(--accent-text);
+    border: 2px dashed var(--border-strong);
+    border-radius: var(--radius);
+    padding: var(--space-6);
+  }
+  @media (max-width: 720px) {
+    .genui {
+      grid-template-columns: 1fr;
+    }
+    .badge-ai {
+      justify-self: start;
+    }
+  }
+</style>
