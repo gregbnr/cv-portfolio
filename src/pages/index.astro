@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import ExperienceTimeline from '../components/ExperienceTimeline.astro';
 import { frContent } from '../data/fr';
 ---
 
@@ -14,4 +16,6 @@ import { frContent } from '../data/fr';
 
   <span id="top"></span>
   <Hero content={frContent} />
+  <About content={frContent} />
+  <ExperienceTimeline content={frContent} />
 </Base>

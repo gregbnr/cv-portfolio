@@ -1,0 +1,68 @@
+---
+import type { SiteContent } from '../data/types';
+import Section from './Section.astro';
+
+interface Props {
+  content: SiteContent;
+}
+const { content } = Astro.props;
+const a = content.about;
+/** Photo optionnelle : déposer le fichier dans /public/img/photo.jpg puis
+ *  renseigner son chemin ici. Tant qu'il est absent, on affiche un placeholder. */
+const photo: string | undefined = undefined;
+---
+
+<Section id="about" heading={a.heading}>
+  <div class="about" data-reveal>
+    <div class="photo">
+      {
+        photo ? (
+          <img src={photo} alt={a.photoAlt} width="220" height="260" />
+        ) : (
+          <div class="photo-ph" role="img" aria-label={a.photoAlt}>
+            GB
+          </div>
+        )
+      }
+    </div>
+    <div class="about-text">
+      {a.paragraphs.map((p) => <p>{p}</p>)}
+    </div>
+  </div>
+</Section>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: var(--space-8);
+    align-items: center;
+  }
+  .photo-ph {
+    width: 220px;
+    aspect-ratio: 22 / 26;
+    border-radius: var(--radius-lg);
+    display: grid;
+    place-items: center;
+    font-size: 3rem;
+    font-weight: 800;
+    color: #fff;
+    background: var(--grad-accent);
+    box-shadow: 0 18px 50px var(--glow);
+  }
+  .about-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    font-size: 1.05rem;
+  }
+  @media (max-width: 680px) {
+    .about {
+      grid-template-columns: 1fr;
+      justify-items: start;
+    }
+    .photo-ph {
+      width: 140px;
+    }
+  }
+</style>

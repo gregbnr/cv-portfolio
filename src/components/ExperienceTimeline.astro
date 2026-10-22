@@ -1,0 +1,166 @@
+---
+import type { SiteContent } from '../data/types';
+import Section from './Section.astro';
+
+interface Props {
+  content: SiteContent;
+}
+const { content } = Astro.props;
+const e = content.experience;
+---
+
+<Section id="experience" heading={e.heading}>
+  <ol class="timeline">
+    {
+      e.items.map((item) => (
+        <li class="tl-item" data-reveal>
+          <span class="dot" aria-hidden="true" />
+          <div class="tl-card">
+            <p class="period">{item.period}</p>
+            <h3>
+              {item.role} · <span class="company">{item.company}</span>
+            </h3>
+            <p class="loc">{item.location}</p>
+            <ul class="bullets">
+              {item.bullets.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+
+  <div class="education" data-reveal>
+    <h3 class="edu-h">{e.educationHeading}</h3>
+    <ul class="edu-list">
+      {
+        e.education.map((ed) => (
+          <li>
+            <span class="edu-period">{ed.period}</span>
+            <span class="edu-title">{ed.title}</span>
+            <span class="edu-school">{ed.school}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Section>
+
+<style>
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .tl-item {
+    position: relative;
+    padding-left: var(--space-8);
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 10px;
+    bottom: calc(-1 * var(--space-6));
+    width: 2px;
+    background: var(--border-strong);
+  }
+  .tl-item:last-child::before {
+    display: none;
+  }
+  .dot {
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--grad-accent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--violet) 18%, transparent);
+  }
+  .tl-card {
+    background: color-mix(in srgb, var(--surface) 65%, transparent);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-6);
+  }
+  .period {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--accent-text);
+    text-transform: uppercase;
+  }
+  .tl-card h3 {
+    font-size: 1.15rem;
+    margin-top: var(--space-1);
+  }
+  .company {
+    color: var(--violet);
+  }
+  .loc {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 2px;
+  }
+  .bullets {
+    margin: var(--space-3) 0 0;
+    padding-left: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: var(--muted);
+  }
+  .bullets li {
+    font-size: 0.95rem;
+  }
+
+  .education {
+    margin-top: var(--space-12);
+  }
+  .edu-h {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-4);
+  }
+  .edu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+  .edu-list li {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: var(--space-2) var(--space-4);
+    align-items: baseline;
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--border);
+  }
+  .edu-period {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent-text);
+  }
+  .edu-title {
+    font-weight: 600;
+  }
+  .edu-school {
+    grid-column: 2;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  @media (max-width: 560px) {
+    .edu-list li {
+      grid-template-columns: 1fr;
+    }
+    .edu-school {
+      grid-column: 1;
+    }
+  }
+</style>
