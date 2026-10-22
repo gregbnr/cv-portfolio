@@ -2,6 +2,7 @@
 import type { SiteContent } from '../data/types';
 import ThemeToggle from './ThemeToggle.astro';
 import LangToggle from './LangToggle.astro';
+import { withBase } from '../lib/url';
 
 interface Props {
   content: SiteContent;
@@ -31,7 +32,7 @@ const links = [
     <div class="actions">
       <LangToggle lang={content.lang} label={n.switchLang} />
       <ThemeToggle label={n.toggleTheme} />
-      <a class="cv-btn" href={content.cvUrl} download>{n.downloadCv}</a>
+      <a class="cv-btn" href={withBase(content.cvUrl)} download>{n.downloadCv}</a>
 
       <details class="menu">
         <summary class="menu-btn" aria-label={n.menu}>
@@ -43,7 +44,7 @@ const links = [
         </summary>
         <nav class="links links-mobile" aria-label={content.nav.menu}>
           {links.map((l) => <a href={l.href} data-spy={l.href}>{l.label}</a>)}
-          <a class="cv-btn cv-btn-mobile" href={content.cvUrl} download>
+          <a class="cv-btn cv-btn-mobile" href={withBase(content.cvUrl)} download>
             {n.downloadCv}
           </a>
         </nav>

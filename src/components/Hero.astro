@@ -1,6 +1,7 @@
 ---
 import type { SiteContent } from '../data/types';
 import PhoneMockup from './PhoneMockup.astro';
+import { withBase } from '../lib/url';
 
 interface Props {
   content: SiteContent;
@@ -21,7 +22,7 @@ const h = content.hero;
       <p class="sub">{h.sub}</p>
       <div class="cta">
         <a class="btn prim" href="#contact">{h.ctaContact}</a>
-        <a class="btn ghost" href={content.cvUrl} download>{h.ctaCv}</a>
+        <a class="btn ghost" href={withBase(content.cvUrl)} download>{h.ctaCv}</a>
       </div>
       <ul class="meta">
         {h.meta.map((m) => <li>{m.value}</li>)}

@@ -2,6 +2,7 @@
 import '../styles/tokens.css';
 import '../styles/global.css';
 import '../styles/motion.css';
+import { withBase } from '../lib/url';
 
 interface Props {
   lang: 'fr' | 'en';
@@ -11,16 +12,14 @@ interface Props {
   image?: string;
 }
 
-const {
-  lang,
-  title,
-  description,
-  skipLabel,
-  image = '/img/og-image.jpg',
-} = Astro.props;
-const base = Astro.site ?? new URL(Astro.url.origin);
-const ogImage = new URL(image, base).href;
-const canonical = new URL(Astro.url.pathname, base).href;
+const { lang, title, description, skipLabel, image } = Astro.props;
+
+const siteBase = import.meta.env.BASE_URL; // ex. '/cv-portfolio/'
+const origin = Astro.site ?? new URL(Astro.url.origin);
+const ogImage = new URL(image ?? withBase('img/og-image.jpg'), origin).href;
+const canonical = new URL(Astro.url.pathname, origin).href;
+const frUrl = new URL(siteBase, origin).href;
+const enUrl = new URL(siteBase + 'en/', origin).href;
 ---
 
 <!doctype html>
@@ -42,11 +41,10 @@ const canonical = new URL(Astro.url.pathname, base).href;
     </script>
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    {/* hreflang (passer en URLs absolues via `site` au déploiement). */}
-    <link rel="alternate" hreflang="fr" href="/" />
-    <link rel="alternate" hreflang="en" href="/en/" />
-    <link rel="alternate" hreflang="x-default" href="/" />
+    <link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml" />
+    <link rel="alternate" hreflang="fr" href={frUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={frUrl} />
     <link rel="canonical" href={canonical} />
 
     {/* Open Graph / Twitter */}
