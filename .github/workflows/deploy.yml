@@ -23,13 +23,15 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          # Astro 7 exige Node >=22.23.4 ; on pin Node 24 pour éviter
+          # qu'un patch 22.x trop ancien du cache runner fasse échouer le build.
+          node-version: 24
       - name: Install dependencies
         run: npm ci
       - name: Build
         env:
           ASTRO_TELEMETRY_DISABLED: '1'
-        run: npm run build || (echo "Build retry after transient failure" && npm run build)
+        run: npm run build
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
