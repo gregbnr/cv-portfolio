@@ -1,33 +1,10 @@
 ---
-import Base from '../layouts/Base.astro';
-import Nav from '../components/Nav.astro';
-import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
-import ExperienceTimeline from '../components/ExperienceTimeline.astro';
-import AppsShowcase from '../components/AppsShowcase.astro';
-import Skills from '../components/Skills.astro';
-import GenUI from '../components/GenUI.astro';
-import Articles from '../components/Articles.astro';
-import Hobbies from '../components/Hobbies.astro';
-import Contact from '../components/Contact.astro';
+import Home from '../layouts/Home.astro';
 import { frContent } from '../data/fr';
 ---
 
-<Base
-  lang="fr"
+<Home
+  content={frContent}
   title="Grégoire Bonnier — Développeur Flutter Senior"
-  description="CV de Grégoire Bonnier, développeur d'applications mobiles Flutter & Android."
->
-  <Nav slot="nav" content={frContent} />
-
-  <span id="top"></span>
-  <Hero content={frContent} />
-  <About content={frContent} />
-  <ExperienceTimeline content={frContent} />
-  <AppsShowcase content={frContent} />
-  <Skills content={frContent} />
-  <GenUI content={frContent} />
-  <Articles content={frContent} />
-  <Hobbies content={frContent} />
-  <Contact content={frContent} />
-</Base>
+  description="CV en ligne de Grégoire Bonnier, développeur d'applications mobiles Flutter & Android (6 ans d'expérience, grands comptes)."
+/>

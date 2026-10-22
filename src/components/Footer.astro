@@ -1,0 +1,51 @@
+---
+import type { SiteContent } from '../data/types';
+
+interface Props {
+  content: SiteContent;
+}
+const { content } = Astro.props;
+const f = content.footer;
+---
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span class="brand">GB</span>
+    <span class="note">{f.note}</span>
+    <a class="top" href="#top">{f.backToTop} ↑</a>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--border);
+    padding-block: var(--space-8);
+    margin-top: var(--space-12);
+  }
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .brand {
+    font-weight: 800;
+    background: var(--grad-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .note {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .top {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .top:hover {
+    color: var(--ink);
+  }
+</style>
