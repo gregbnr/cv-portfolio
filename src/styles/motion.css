@@ -1,0 +1,49 @@
+/* Animations au scroll — ENRICHISSEMENT PROGRESSIF.
+   Le contenu est visible par défaut : aucun état masqué hors du bloc gardé.
+   - @supports : scroll-driven animations (Chrome/Edge/Safari ; Firefox affiche
+     le contenu statiquement).
+   - prefers-reduced-motion : aucune animation. */
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    [data-reveal] {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+
+    @keyframes reveal-in {
+      from {
+        opacity: 0;
+        transform: translateY(26px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* Dérive lente et douce du halo du hero. */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: -20%;
+      z-index: -1;
+      background: radial-gradient(
+        40% 40% at 50% 50%,
+        var(--glow),
+        transparent 70%
+      );
+      animation: hero-drift 18s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    @keyframes hero-drift {
+      from {
+        transform: translate3d(-6%, -4%, 0);
+      }
+      to {
+        transform: translate3d(8%, 5%, 0);
+      }
+    }
+  }
+}
