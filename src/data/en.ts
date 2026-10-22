@@ -274,4 +274,24 @@ export const enContent: SiteContent = {
     note: '© 2026 Grégoire Bonnier',
     backToTop: 'Back to top',
   },
+
+  chatbot: {
+    buttonLabel: 'Open the assistant',
+    teaser: 'Got a question? I can help 👋',
+    title: 'AI Assistant',
+    status: 'Online',
+    greeting:
+      'Hi 👋 I’m Grégoire’s AI assistant. How can I help you today?',
+    placeholder: 'Type your message…',
+    send: 'Send',
+    close: 'Close',
+    contactCta: 'Talk to the real Grégoire →',
+    punchlines: [
+      'Ha. You really thought a chatbot hiding in the corner of a CV could help you? 😏',
+      '*thinks really hard*… nope. Can’t do anything for you. But Grégoire can. 👇',
+      'I’m an AI trained on exactly 0 data. My only talent: making you click. 🎣',
+      'Error 404: intelligence not found. Have you tried the “Get in touch” button?',
+      'I could reply… but tokens cost money and Grégoire is cheap. 💸',
+    ],
+  },
 };

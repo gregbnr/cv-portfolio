@@ -1,36 +1,27 @@
 ---
 import type { SiteContent } from '../data/types';
 import Section from './Section.astro';
-import { withBase } from '../lib/url';
+import { Image } from 'astro:assets';
+import profileImg from '../assets/profile-image.webp';
 
 interface Props {
   content: SiteContent;
 }
 const { content } = Astro.props;
 const a = content.about;
-const photo: string | undefined = withBase('img/profile-image.webp');
 ---
 
 <Section id="about" heading={a.heading}>
   <div class="about" data-reveal>
     <div class="photo">
-      {
-        photo ? (
-          <img
-            class="photo-img"
-            src={photo}
-            alt={a.photoAlt}
-            width="280"
-            height="280"
-            loading="lazy"
-            decoding="async"
-          />
-        ) : (
-          <div class="photo-ph" role="img" aria-label={a.photoAlt}>
-            GB
-          </div>
-        )
-      }
+      <Image
+        class="photo-img"
+        src={profileImg}
+        alt={a.photoAlt}
+        width={600}
+        height={600}
+        loading="lazy"
+      />
     </div>
     <div class="about-text">
       {a.paragraphs.map((p) => <p>{p}</p>)}
@@ -48,6 +39,7 @@ const photo: string | undefined = withBase('img/profile-image.webp');
   .photo-img {
     width: 100%;
     max-width: 280px;
+    height: auto;
     aspect-ratio: 1;
     object-fit: cover;
     border-radius: var(--radius-lg);

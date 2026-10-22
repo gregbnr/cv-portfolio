@@ -14,7 +14,7 @@ const codeHtml = [
   "      <span class=\"pr\">stack</span>: [<span class=\"st\">'Dart'</span>, <span class=\"st\">'BLoC'</span>, <span class=\"st\">'Riverpod'</span>],",
   '    );',
   '  }',
-  '}<span class="caret"></span>',
+  '}',
 ].join('\n');
 ---
 
@@ -23,7 +23,9 @@ const codeHtml = [
     <span class="dots"><i></i><i></i><i></i></span>
     <span class="file">profile.dart</span>
   </div>
-  <pre class="code"><code set:html={codeHtml} /></pre>
+  <pre class="code"><code id="hero-code" set:html={codeHtml}></code><span
+      class="caret"
+      aria-hidden="true"></span></pre>
 </div>
 
 <style>
@@ -79,27 +81,8 @@ const codeHtml = [
     color: #c9a9db;
   }
 
-  .kw {
-    color: #f472b6;
-  }
-  .ty {
-    color: #22d3ee;
-  }
-  .fn {
-    color: #c084fc;
-  }
-  .pr {
-    color: #e9a7ff;
-  }
-  .st {
-    color: #86efac;
-  }
-  .nu {
-    color: #fbbf24;
-  }
-  .an {
-    color: #8b93ab;
-  }
+  /* Couleurs de syntaxe en is:global (plus bas) : elles doivent aussi
+     s'appliquer aux <span> recréés par la machine à écrire en JS. */
 
   .caret {
     display: inline-block;
@@ -120,3 +103,85 @@ const codeHtml = [
     }
   }
 </style>
+
+<style is:global>
+  /* Couleurs de syntaxe (aussi sur les spans créés en JS, sous #hero-code). */
+  #hero-code .kw {
+    color: #f472b6;
+  }
+  #hero-code .ty {
+    color: #22d3ee;
+  }
+  #hero-code .fn {
+    color: #c084fc;
+  }
+  #hero-code .pr {
+    color: #e9a7ff;
+  }
+  #hero-code .st {
+    color: #86efac;
+  }
+  #hero-code .nu {
+    color: #fbbf24;
+  }
+  #hero-code .an {
+    color: #8b93ab;
+  }
+</style>
+
+<script>
+  // Machine à écrire : le code s'écrit caractère par caractère.
+  // Enrichissement progressif : sans JS ou en reduced-motion, le code complet
+  // reste affiché tel quel.
+  const code = document.getElementById('hero-code');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (code && !reduce) {
+    // 1) On relève chaque caractère et sa classe de coloration depuis le DOM.
+    type Tok = { ch: string; cls: string | null };
+    const tokens: Tok[] = [];
+    for (const node of Array.from(code.childNodes)) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        for (const ch of node.textContent ?? '') tokens.push({ ch, cls: null });
+      } else if (node instanceof HTMLElement) {
+        const cls = node.className || null;
+        for (const ch of node.textContent ?? '') tokens.push({ ch, cls });
+      }
+    }
+
+    // 2) On vide et on retape.
+    code.textContent = '';
+    let cur: { cls: string | null; node: Node } | null = null;
+
+    const put = (ch: string, cls: string | null) => {
+      if (!cur || cur.cls !== cls) {
+        if (cls) {
+          const s = document.createElement('span');
+          s.className = cls;
+          code.appendChild(s);
+          cur = { cls, node: s };
+        } else {
+          const t = document.createTextNode('');
+          code.appendChild(t);
+          cur = { cls: null, node: t };
+        }
+      }
+      cur.node.textContent += ch;
+    };
+
+    let i = 0;
+    const tick = () => {
+      if (i >= tokens.length) {
+        code.classList.add('done');
+        return;
+      }
+      const { ch, cls } = tokens[i++];
+      put(ch, cls);
+      let delay = 16 + Math.random() * 22;
+      if (ch === '\n') delay = 110;
+      else if (ch === ' ') delay = 8;
+      window.setTimeout(tick, delay);
+    };
+    window.setTimeout(tick, 450);
+  }
+</script>

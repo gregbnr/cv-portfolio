@@ -276,4 +276,24 @@ export const frContent: SiteContent = {
     note: '© 2026 Grégoire Bonnier',
     backToTop: 'Haut de page',
   },
+
+  chatbot: {
+    buttonLabel: 'Ouvrir l’assistant',
+    teaser: 'Une question ? Je peux vous aider 👋',
+    title: 'Assistant IA',
+    status: 'En ligne',
+    greeting:
+      'Bonjour 👋 Je suis l’assistant IA de Grégoire. Que puis-je faire pour vous aider ?',
+    placeholder: 'Écrivez votre message…',
+    send: 'Envoyer',
+    close: 'Fermer',
+    contactCta: 'Parler au vrai Grégoire →',
+    punchlines: [
+      'Haha. Tu crois vraiment qu’un chatbot planqué en bas à droite d’un CV va t’aider ? 😏',
+      '*réfléchit très fort*… non. Je ne peux rien pour toi. Mais Grégoire, si. 👇',
+      'Je suis une IA entraînée sur exactement 0 donnée. Mon seul talent : t’avoir fait cliquer. 🎣',
+      'Erreur 404 : intelligence introuvable. T’as essayé le bouton « Me contacter » ?',
+      'Je pourrais te répondre… mais ça coûte des tokens et Grégoire est radin. 💸',
+    ],
+  },
 };

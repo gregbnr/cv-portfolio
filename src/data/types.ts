@@ -142,4 +142,17 @@ export interface SiteContent {
     note: string;
     backToTop: string;
   };
+
+  chatbot: {
+    buttonLabel: string;
+    teaser: string;
+    title: string;
+    status: string;
+    greeting: string;
+    placeholder: string;
+    send: string;
+    close: string;
+    contactCta: string;
+    punchlines: string[];
+  };
 }
