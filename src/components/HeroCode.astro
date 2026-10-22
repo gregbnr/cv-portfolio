@@ -1,0 +1,122 @@
+---
+// Fenêtre d'éditeur décorative affichant un extrait Flutter.
+// Le code est statique et de confiance (aucune donnée utilisateur) → set:html sûr.
+const codeHtml = [
+  '<span class="kw">class</span> <span class="ty">Dev</span> <span class="kw">extends</span> <span class="ty">StatelessWidget</span> {',
+  '  <span class="kw">const</span> <span class="ty">Dev</span>({<span class="kw">super</span>.key});',
+  '',
+  '  <span class="an">@override</span>',
+  '  <span class="ty">Widget</span> <span class="fn">build</span>(<span class="ty">BuildContext</span> context) {',
+  '    <span class="kw">return</span> <span class="kw">const</span> <span class="ty">Profile</span>(',
+  "      <span class=\"pr\">name</span>: <span class=\"st\">'Grégoire Bonnier'</span>,",
+  "      <span class=\"pr\">role</span>: <span class=\"st\">'Flutter Senior'</span>,",
+  '      <span class="pr">years</span>: <span class="nu">6</span>,',
+  "      <span class=\"pr\">stack</span>: [<span class=\"st\">'Dart'</span>, <span class=\"st\">'BLoC'</span>, <span class=\"st\">'Riverpod'</span>],",
+  '    );',
+  '  }',
+  '}<span class="caret"></span>',
+].join('\n');
+---
+
+<div class="editor" role="img" aria-label="Extrait de code Flutter décrivant Grégoire Bonnier">
+  <div class="bar" aria-hidden="true">
+    <span class="dots"><i></i><i></i><i></i></span>
+    <span class="file">profile.dart</span>
+  </div>
+  <pre class="code"><code set:html={codeHtml} /></pre>
+</div>
+
+<style>
+  .editor {
+    width: 100%;
+    max-width: 370px;
+    margin-inline: auto;
+    border-radius: 14px;
+    background: #0d0818;
+    border: 1px solid var(--border-strong);
+    box-shadow: 0 24px 70px var(--glow);
+    overflow: hidden;
+    font-family: var(--font-mono);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 13px;
+    background: #160d24;
+    border-bottom: 1px solid var(--border);
+  }
+  .dots {
+    display: flex;
+    gap: 6px;
+  }
+  .dots i {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    display: block;
+  }
+  .dots i:nth-child(1) {
+    background: #ff5f57;
+  }
+  .dots i:nth-child(2) {
+    background: #febc2e;
+  }
+  .dots i:nth-child(3) {
+    background: #28c840;
+  }
+  .file {
+    font-size: 0.72rem;
+    color: #c9a9db;
+  }
+  .code {
+    margin: 0;
+    padding: 15px 16px 17px;
+    font-size: 0.73rem;
+    line-height: 1.75;
+    white-space: pre;
+    overflow-x: auto;
+    color: #c9a9db;
+  }
+
+  .kw {
+    color: #f472b6;
+  }
+  .ty {
+    color: #22d3ee;
+  }
+  .fn {
+    color: #c084fc;
+  }
+  .pr {
+    color: #e9a7ff;
+  }
+  .st {
+    color: #86efac;
+  }
+  .nu {
+    color: #fbbf24;
+  }
+  .an {
+    color: #8b93ab;
+  }
+
+  .caret {
+    display: inline-block;
+    width: 7px;
+    height: 1.05em;
+    translate: 3px 2px;
+    background: var(--violet);
+    border-radius: 1px;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .caret {
+      animation: caret-blink 1.1s steps(1) infinite;
+    }
+    @keyframes caret-blink {
+      50% {
+        opacity: 0;
+      }
+    }
+  }
+</style>

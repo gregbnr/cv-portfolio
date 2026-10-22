@@ -1,6 +1,6 @@
 ---
 import type { SiteContent } from '../data/types';
-import PhoneMockup from './PhoneMockup.astro';
+import HeroCode from './HeroCode.astro';
 import { withBase } from '../lib/url';
 
 interface Props {
@@ -40,13 +40,8 @@ const lastName = restName.join(' ');
         {h.meta.map((m) => <li>{m.value}</li>)}
       </ul>
     </div>
-    <div class="hero-visual" aria-hidden="true">
-      <PhoneMockup
-        screenTitle={content.apps.items[0]?.screenTitle ?? 'App'}
-        subtitle="Flutter"
-        accentFrom="#A855F7"
-        accentTo="#EC4899"
-      />
+    <div class="hero-visual">
+      <HeroCode />
     </div>
   </div>
 </section>
@@ -290,7 +285,7 @@ const lastName = restName.join(' ');
       gap: var(--space-8);
     }
     .hero-visual {
-      max-width: 180px;
+      max-width: 400px;
       order: -1;
     }
   }
