@@ -1,0 +1,188 @@
+---
+import type { SiteContent } from '../data/types';
+import ThemeToggle from './ThemeToggle.astro';
+import LangToggle from './LangToggle.astro';
+
+interface Props {
+  content: SiteContent;
+}
+const { content } = Astro.props;
+const n = content.nav;
+
+const links = [
+  { href: '#about', label: n.about },
+  { href: '#experience', label: n.experience },
+  { href: '#apps', label: n.apps },
+  { href: '#skills', label: n.skills },
+  { href: '#genui', label: n.genui },
+  { href: '#articles', label: n.articles },
+  { href: '#contact', label: n.contact },
+];
+---
+
+<header class="nav">
+  <div class="nav-inner container">
+    <a href="#top" class="brand" aria-label="Grégoire Bonnier">GB</a>
+
+    <nav class="links links-desktop" aria-label={content.nav.menu}>
+      {links.map((l) => <a href={l.href} data-spy={l.href}>{l.label}</a>)}
+    </nav>
+
+    <div class="actions">
+      <LangToggle lang={content.lang} label={n.switchLang} />
+      <ThemeToggle label={n.toggleTheme} />
+      <a class="cv-btn" href={content.cvUrl} download>{n.downloadCv}</a>
+
+      <details class="menu">
+        <summary class="menu-btn" aria-label={n.menu}>
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"></path>
+          </svg>
+        </summary>
+        <nav class="links links-mobile" aria-label={content.nav.menu}>
+          {links.map((l) => <a href={l.href} data-spy={l.href}>{l.label}</a>)}
+          <a class="cv-btn cv-btn-mobile" href={content.cvUrl} download>
+            {n.downloadCv}
+          </a>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--bg) 72%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    min-height: 60px;
+  }
+  .brand {
+    font-weight: 800;
+    font-size: 1.1rem;
+    text-decoration: none;
+    background: var(--grad-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .links {
+    display: flex;
+    gap: var(--space-4);
+  }
+  .links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 4px 2px;
+    transition: color 0.15s ease;
+  }
+  .links a:hover,
+  .links a[aria-current='true'] {
+    color: var(--ink);
+  }
+  .links a[aria-current='true'] {
+    position: relative;
+  }
+  .links-desktop a[aria-current='true']::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--grad-accent);
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-inline-start: auto;
+  }
+  .cv-btn {
+    display: inline-grid;
+    place-items: center;
+    height: 38px;
+    padding-inline: 14px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: #fff;
+    background: var(--grad-accent);
+    box-shadow: 0 6px 20px var(--glow);
+  }
+
+  /* Menu mobile (details) */
+  .menu {
+    position: relative;
+  }
+  .menu-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+    list-style: none;
+  }
+  .menu-btn::-webkit-details-marker {
+    display: none;
+  }
+  .links-mobile {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    min-width: 200px;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  }
+  .cv-btn-mobile {
+    margin-top: var(--space-2);
+  }
+
+  /* Desktop ≥ 820px : nav inline, menu caché. */
+  .links-desktop {
+    display: none;
+  }
+  @media (min-width: 820px) {
+    .links-desktop {
+      display: flex;
+    }
+    .menu {
+      display: none;
+    }
+  }
+  /* Mobile < 820px : bouton CV plein écran caché au profit du menu. */
+  @media (max-width: 819px) {
+    .actions > .cv-btn:not(.cv-btn-mobile) {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  import '../scripts/scrollspy.ts';
+</script>

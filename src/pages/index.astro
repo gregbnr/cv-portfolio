@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import { frContent } from '../data/fr';
 ---
 
 <Base
@@ -7,8 +9,20 @@ import Base from '../layouts/Base.astro';
   title="Grégoire Bonnier — Développeur Flutter Senior"
   description="CV de Grégoire Bonnier, développeur d'applications mobiles Flutter & Android."
 >
-  <section class="container" style="padding-block: var(--space-24);">
+  <Nav slot="nav" content={frContent} />
+
+  <span id="top"></span>
+  <section class="container" style="padding-block: var(--space-16);">
     <h1 style="font-size: clamp(2rem, 6vw, 3rem);">Grégoire Bonnier</h1>
-    <p style="color: var(--muted);">Placeholder — scaffold Astro opérationnel.</p>
+    <p style="color: var(--muted);">Placeholder — nav opérationnelle.</p>
+  </section>
+  <section id="about" class="container" style="min-height: 60vh;">
+    <h2>À propos</h2>
+  </section>
+  <section id="apps" class="container" style="min-height: 60vh;">
+    <h2>Apps</h2>
+  </section>
+  <section id="contact" class="container" style="min-height: 60vh;">
+    <h2>Contact</h2>
   </section>
 </Base>

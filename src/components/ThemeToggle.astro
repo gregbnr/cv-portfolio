@@ -1,0 +1,113 @@
+---
+interface Props {
+  label: string;
+}
+const { label } = Astro.props;
+---
+
+<button id="theme-toggle" class="theme-toggle" type="button" aria-label={label}>
+  <svg class="icon icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+    <path
+      fill="currentColor"
+      d="M12 3a9 9 0 1 0 9 9c0-.46-.03-.92-.1-1.36A6 6 0 0 1 12 3Z"></path>
+  </svg>
+  <svg class="icon icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+    <path
+      fill="currentColor"
+      d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0-5a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1Zm0 18a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1ZM4.22 4.22a1 1 0 0 1 1.42 0l.7.7a1 1 0 0 1-1.42 1.42l-.7-.7a1 1 0 0 1 0-1.42Zm12.73 12.73a1 1 0 0 1 1.42 0l.7.7a1 1 0 0 1-1.42 1.42l-.7-.7a1 1 0 0 1 0-1.42ZM2 12a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1Zm18 0a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2h-1a1 1 0 0 1-1-1ZM4.22 19.78a1 1 0 0 1 0-1.42l.7-.7a1 1 0 1 1 1.42 1.42l-.7.7a1 1 0 0 1-1.42 0Zm12.73-12.73a1 1 0 0 1 0-1.42l.7-.7a1 1 0 1 1 1.42 1.42l-.7.7a1 1 0 0 1-1.42 0Z"></path>
+  </svg>
+</button>
+
+<style>
+  .theme-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+  }
+  .theme-toggle:hover {
+    border-color: var(--border-strong);
+  }
+  .icon {
+    grid-area: 1 / 1;
+  }
+
+  /* Visibilité des icônes selon le thème rendu.
+     Base = suit le système ; les overrides meta[content] prennent le dessus. */
+  .icon-sun {
+    display: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    .icon-moon {
+      display: none;
+    }
+    .icon-sun {
+      display: block;
+    }
+  }
+  :root:has(> head > meta[name='color-scheme'][content='light']) .icon-sun {
+    display: none;
+  }
+  :root:has(> head > meta[name='color-scheme'][content='light']) .icon-moon {
+    display: block;
+  }
+  :root:has(> head > meta[name='color-scheme'][content='dark']) .icon-moon {
+    display: none;
+  }
+  :root:has(> head > meta[name='color-scheme'][content='dark']) .icon-sun {
+    display: block;
+  }
+</style>
+
+<script>
+  const meta = document.querySelector<HTMLMetaElement>(
+    'meta[name="color-scheme"]'
+  );
+  const btn = document.getElementById('theme-toggle');
+
+  if (meta && btn) {
+    const systemDark = () =>
+      window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const rendered = (): 'dark' | 'light' => {
+      const c = meta.content;
+      if (c === 'dark' || c === 'light') return c;
+      return systemDark() ? 'dark' : 'light';
+    };
+    const store = (v: 'dark' | 'light' | null) => {
+      try {
+        if (v) localStorage.setItem('color-scheme', v);
+        else localStorage.removeItem('color-scheme');
+      } catch {
+        /* localStorage indisponible */
+      }
+    };
+
+    btn.addEventListener('click', () => {
+      const target = rendered() === 'dark' ? 'light' : 'dark';
+      const sys = systemDark() ? 'dark' : 'light';
+      // Si la cible correspond au système, on revient au mode « système ».
+      if (target === sys) {
+        store(null);
+        meta.content = 'light dark';
+      } else {
+        store(target);
+        meta.content = target;
+      }
+    });
+
+    // Synchronisation entre onglets.
+    window.addEventListener('storage', (e) => {
+      if (e.key !== 'color-scheme') return;
+      meta.content =
+        e.newValue === 'dark' || e.newValue === 'light'
+          ? e.newValue
+          : 'light dark';
+    });
+  }
+</script>
